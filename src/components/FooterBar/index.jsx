@@ -13,7 +13,7 @@ export default function FooterBar(props) {
 
 
   return (
-    <div className='am-tab-bar'>
+    <div className='am-tab-bar' style={{ backgroundColor: 'white' }}>
       <TabBar activeKey={pathname} onChange={value => goToPath(value)}>
         {
           navList.map(item =>

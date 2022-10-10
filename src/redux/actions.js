@@ -1,5 +1,5 @@
-import { registerApi, loginApi, getUserFormCookieApi } from "../api/user"
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER } from "./actions-type"
+import { registerApi, loginApi, getUserFormCookieApi, getUserListApi } from "../api/user"
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RECEIVE_USER_LIST, RESET_USER } from "./actions-type"
 import { updateUserApi } from './../api/user';
 
 
@@ -56,6 +56,19 @@ export function getUser() {
       dispatch(receiveUser(data))
     } else {
       dispatch(resetUser(msg))
+    }
+  }
+}
+
+
+// 接收用户列表的同步action
+export const receiveUserList = (userList) => ({ type: RECEIVE_USER_LIST, data: userList })
+// 获取userList的异步action
+export function getUserList(userType) {
+  return async dispatch => {
+    const { code, data } = await getUserListApi(userType)
+    if (code === 0) {
+      dispatch(receiveUserList(data))
     }
   }
 }

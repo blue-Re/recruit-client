@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER } from "./actions-type";
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RECEIVE_USER_LIST, RESET_USER } from "./actions-type";
 
 const preState = {
   username: '',
@@ -10,7 +10,7 @@ function user(state = preState, action) {
   const { type, data } = action
   switch (type) {
     case AUTH_SUCCESS:
-      return {  ...data }
+      return { ...data }
 
     case ERROR_MSG:
       return { msg: data }
@@ -25,7 +25,21 @@ function user(state = preState, action) {
   }
 }
 
+// 获取userList
+const initUserList = []
+function userList(state = initUserList, action) {
+  const { type, data } = action
+  switch (type) {
+    case RECEIVE_USER_LIST:
+      return data
+
+    default:
+      return state
+  }
+}
+
 
 export default combineReducers({
-  user
+  user,
+  userList
 })

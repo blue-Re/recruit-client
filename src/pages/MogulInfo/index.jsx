@@ -42,11 +42,11 @@ function MogulInfo(props) {
         onFinish={onFinish}
         footer={<Button color='primary' block onClick={onFinish}> 保 存 </Button>}
       >
-        <Form.Item label='求职职位' name='info'>
+        <Form.Item label='求职职位' name='post'>
           <Input placeholder='请输入求职职位' clearable />
         </Form.Item>
-        <Form.Item label='个人介绍' name='company'>
-          <Input placeholder='请输入公司名称' clearable />
+        <Form.Item label='个人介绍' name='info'>
+          <Input placeholder='请输入个人介绍' clearable />
         </Form.Item>
       </Form>
     </div>

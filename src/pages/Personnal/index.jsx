@@ -8,15 +8,15 @@ function Personal(props) {
   const { user: { header, post, username, info, salary, company } } = props
 
   return (
-    <div>
+    <div style={{ margin: '50px 0' }}>
       <Result
         icon={<img src={header} alt="" />}
         status='success'
-        title={`姓名：${username}`}
-        description={`公司名称：${company}`}
+        title={username}
+        description={company || ''}
       />
       <List style={{ padding: '0 15px' }} >
-        {post ? <div>招聘职位： {post}</div> : ''}
+        {post ? <div>职位： {post}</div> : ''}
         {info ? <div>简介：{info}</div> : ''}
         {salary ? <div>薪资：{salary}</div> : ''}
       </List>

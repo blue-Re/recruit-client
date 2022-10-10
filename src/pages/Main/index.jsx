@@ -94,7 +94,7 @@ function Main(props) {
   return (
     <div>
       {
-        isShowNavBar ? <NavBar back={null}>{isShowNavBar.title}</NavBar> : ''
+        isShowNavBar ? <NavBar className='sticky-header' back={null}>{isShowNavBar.title}</NavBar> : ''
       }
 
       <Switch>
