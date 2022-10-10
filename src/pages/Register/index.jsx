@@ -32,7 +32,6 @@ function Register(props) {
     history.push('/login')
   };
 
-  // console.log(props);
   return (
     <div>
       <NavBar back={null}>信院招聘</NavBar>

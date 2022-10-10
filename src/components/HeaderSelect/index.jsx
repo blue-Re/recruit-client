@@ -18,7 +18,6 @@ export default function HeaderSelect(props) {
   }
 
   const handleHeader = (header) => {
-    // console.log(header);
     props.getHeader(header)
     setHeader(header)
   };

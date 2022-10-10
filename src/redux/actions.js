@@ -1,4 +1,4 @@
-import { registerApi, loginApi } from "../api/user"
+import { registerApi, loginApi, getUserFormCookieApi } from "../api/user"
 import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER } from "./actions-type"
 import { updateUserApi } from './../api/user';
 
@@ -43,6 +43,19 @@ export function updateUser(params) {
   }
 }
 // 接收用户同步action
-const receiveUser = (user) => ({ type: RECEIVE_USER, data: user})
+const receiveUser = (user) => ({ type: RECEIVE_USER, data: user })
 // 重置用户的同步action
-const resetUser = (msg) => ({ type: RESET_USER, data: msg})
+const resetUser = (msg) => ({ type: RESET_USER, data: msg })
+
+
+// 获取用户异步action
+export function getUser() {
+  return async dispatch => {
+    const { data, msg, code } = await getUserFormCookieApi();
+    if (code === 0) {
+      dispatch(receiveUser(data))
+    } else {
+      dispatch(resetUser(msg))
+    }
+  }
+}
