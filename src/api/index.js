@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 const http = axios.create({
-  baseURL: '',
-  timeout: 5000
+  baseURL: 'http://localhost:8000',
+  timeout: 5000,
+  withCredentials: true,
 })
 
 http.interceptors.request.use(
