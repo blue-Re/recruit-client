@@ -37,6 +37,10 @@
   text-align: right;
 }
 
+.chat-me .adm-list-item-content-main{
+  text-align: right;
+}
+
 .adm-nav-bar{
   background-color: #1677ff;
   color: white;

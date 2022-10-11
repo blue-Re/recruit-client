@@ -17,6 +17,7 @@ import Message from './../Message/index';
 import Personal from './../Personnal/index';
 
 import FooterBar from './../../components/FooterBar/index';
+import Chat from '../Chat';
 
 function Main(props) {
   const location = useLocation()
@@ -100,6 +101,7 @@ function Main(props) {
       <Switch>
         <Route path='/bossInfo' component={BossInfo} />
         <Route path='/mogulInfo' component={MogulInfo} />
+        <Route path='/chat/:userid' component={Chat}/>
         {
           navList.map(item => {
             return (

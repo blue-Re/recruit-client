@@ -1,14 +1,21 @@
 import React from 'react'
 import { Card, } from 'antd-mobile'
+import { useHistory } from 'react-router-dom';
 
 export default function UserList(props) {
   const { userList } = props
+  const history = useHistory()
+
+  const goToPath = (userId) => {
+    history.push(`/chat/${userId}`)
+  };
+  
   return (
     <div style={{ margin: '50px 0'}}>
       {
         userList.map(item => {
           return (
-            <div key={item._id} style={{ display: 'flex', padding: '8px 0', border: '1px solid #efefef', alignItems: 'center' }}>
+            <div onClick={() => goToPath(item._id)} key={item._id} style={{ display: 'flex', padding: '8px 0', border: '1px solid #efefef', alignItems: 'center' }}>
               <Card>
                 <img src={item.header} alt="" />
               </Card>
