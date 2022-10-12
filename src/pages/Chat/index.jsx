@@ -110,7 +110,7 @@ function Chat(props) {
         }
       </List>
       <div >
-        <Form.Item style={{ position: 'fixed', bottom: 0 }}>
+        <Form.Item style={{ position: 'fixed', bottom: 0, width: '100%' }}>
           <div style={{ display: 'flex' }}>
             <Input onFocus={() => setEmojIsShow(false)} value={content} onChange={setContent} style={{ flex: 1 }} placeholder='请输入' clearable />
             <Button onClick={() => setEmojIsShow(!emojIsShow)}>😀</Button>
