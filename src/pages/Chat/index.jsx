@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useRouteMatch, useHistory } from 'react-router-dom';
 
-import { sendMsg } from '../../redux/actions';
+import { sendMsg, readMsg } from '../../redux/actions';
 
 const emojis = [
   '😀', '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣', '😀'
@@ -56,9 +56,21 @@ function Chat(props) {
 
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight)
+
+
     return () => {
     };
-  },);
+  });
+
+  // 发请求更新未读消息
+  useEffect(() => {
+    return () => {
+      const from = routeMatch.params.userid
+      const to = user._id
+      props.readMsg(from, to)
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div id='chat-page'>
@@ -69,7 +81,7 @@ function Chat(props) {
       >
         {users[targetId].username}
       </NavBar>
-      <List style={{ marginTop: 50, marginBottom: emojIsShow ? 300: 70 }}>
+      <List style={{ marginTop: 50, marginBottom: emojIsShow ? 300 : 70 }}>
         {
           currentMsgs.map(msg => {
             if (meId === msg.to) {
@@ -142,5 +154,5 @@ function Chat(props) {
 
 export default connect(
   state => ({ user: state.user, chat: state.chat }),
-  { sendMsg }
+  { sendMsg, readMsg }
 )(Chat)

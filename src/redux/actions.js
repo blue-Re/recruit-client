@@ -1,6 +1,6 @@
 import { registerApi, loginApi, getUserFormCookieApi, getUserListApi, getChatMsgListApi } from "../api/user"
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_MSG_LIST, RECEIVE_MSG, RECEIVE_USER, RECEIVE_USER_LIST, RESET_USER } from "./actions-type"
-import { updateUserApi } from './../api/user';
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_MSG_LIST, RECEIVE_MSG, RECEIVE_USER, RECEIVE_USER_LIST, RESET_USER, MSG_READ } from "./actions-type"
+import { updateUserApi, readMsgApi } from './../api/user';
 import { io } from "socket.io-client";
 
 
@@ -98,7 +98,6 @@ function initIo(dispatch, userid) {
 
       // 只有当chatMsg是与当前用户相关的消息，采取分发同步action保存消息
       if (userid === chatMsg.from || userid === chatMsg.to) {
-        console.log(111);
         dispatch(receiveMsg(chatMsg))
       }
     })
@@ -108,7 +107,6 @@ function initIo(dispatch, userid) {
 // 异步发送消息
 export function sendMsg({ from, to, content }) {
   return dispatch => {
-    console.log();
 
     io.socket.emit('browserSend', { from, to, content })
   }
@@ -121,5 +119,17 @@ async function getMsgList(dispatch, userid) {
   if (code === 0) {
     // 风发同步action
     dispatch(receiveMsgList({ users, chatMsgs }))
+  }
+}
+
+const msgRead = ({ count, from, to }) => ({ type: MSG_READ, data: { count, from, to } })
+// 异步读消息
+export const readMsg = (from, to) => {
+  return async dispatch => {
+    const { data, code } = await readMsgApi(from)
+    if (code === 0) {
+      const count = data
+      dispatch(msgRead({ count, from, to }))
+    }
   }
 }

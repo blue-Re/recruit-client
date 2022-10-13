@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_MSG, RECEIVE_MSG_LIST, RECEIVE_USER, RECEIVE_USER_LIST, RESET_USER } from "./actions-type";
+import { AUTH_SUCCESS, ERROR_MSG, MSG_READ, RECEIVE_MSG, RECEIVE_MSG_LIST, RECEIVE_USER, RECEIVE_USER_LIST, RESET_USER } from "./actions-type";
 
 const preState = {
   username: '',
@@ -43,7 +43,6 @@ function userList(state = initUserList, action) {
 const initChat = {}
 function chat(state = initChat, action) {
   const { type, data } = action
-  console.log(data);
 
   switch (type) {
     case RECEIVE_MSG_LIST:
@@ -57,6 +56,20 @@ function chat(state = initChat, action) {
         users: state.users,
         chatMsgs: [...state.chatMsgs, data],
         unReadCount: 0
+      }
+
+    case MSG_READ:
+      const { from, to, count } = data
+      return {
+        users: state.users,
+        chatMsgs: state.chatMsgs.map(msg => {
+          if (msg.from === from && msg.to === to && !msg.read) {
+            return { ...msg, read: true }
+          } else {
+            return msg
+          }
+        }),
+        unReadCount: state.unReadCount - count
       }
 
     default:
