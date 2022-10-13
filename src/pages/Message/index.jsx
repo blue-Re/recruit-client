@@ -66,7 +66,7 @@ function Message(props) {
                     height={40}
                   />
                 }
-                extra={<Badge content={msg.unReadCount} />}
+                extra={<Badge content={msg.unReadCount || ''} />}
                 description={msg.content}
               >
                 {targetUser.username}
