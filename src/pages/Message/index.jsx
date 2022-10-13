@@ -8,20 +8,32 @@ function Message(props) {
   const { user, chat: { users, chatMsgs } = {} } = props
 
   // 对chatMsg进行分组
-  const getLastMsgs = (chatMsgs) => {
+  const getLastMsgs = (chatMsgs, userid) => {
     const lastMsgObjs = {}
 
     if (chatMsgs) {
       chatMsgs.forEach(msg => {
+
+        // 对msg进行个体统计
+        if (msg.to === userid && !msg.read) {
+          msg.unReadCount = 1
+        } else {
+          msg.unReadCount = 0
+        }
+
         const chatId = msg.chat_id
         const lastMsg = lastMsgObjs[chatId]
 
         if (!lastMsg) {
           lastMsgObjs[chatId] = msg
         } else {
+          const unReadCount = lastMsg.unReadCount + msg.unReadCount
+
           if (msg.create_time > lastMsg.create_time) {
             lastMsgObjs[chatId] = msg
           }
+
+          lastMsgObjs[chatId].unReadCount = unReadCount
         }
       })
     }
@@ -32,7 +44,7 @@ function Message(props) {
     })
     return lastMsgs
   };
-  const lastMsgs = getLastMsgs(chatMsgs)
+  const lastMsgs = getLastMsgs(chatMsgs, user._id)
 
   return (
     <div style={{ margin: '50px 0' }}>
@@ -54,7 +66,7 @@ function Message(props) {
                     height={40}
                   />
                 }
-                extra={<Badge content='0' />}
+                extra={<Badge content={msg.unReadCount} />}
                 description={msg.content}
               >
                 {targetUser.username}
